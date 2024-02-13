@@ -154,16 +154,21 @@ export class Modal extends Plugin {
         var buttonsConfig = this.config.get('buttons', []);
         var modal = this;
 
+        var form = Bulma.createElement('form');
+        form.setAttribute('method', 'POST');
+
         Bulma.each(buttonsConfig, function(buttonConfig) {
             var button = Bulma.createElement('button', buttonConfig.classes);
+            button.setAttribute('formaction', buttonConfig.formaction);
             button.innerHTML = buttonConfig.label;
 
             button.addEventListener('click', function(event) {
                 buttonConfig.onClick(event);
             });
 
-            modal.footer.appendChild(button);
+            form.appendChild(button);
         });
+        modal.footer.appendChild(form);
     }
 
     /**
